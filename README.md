@@ -20,14 +20,14 @@ This small project was created to work on an arduino with two serial interfaces,
 
 Within your setup function you need to initialize both serial lines.
 
-'' serCom.begin(57600, 9600); /* baud rate serial 1, baud rate serial2
-'' serCom.test(); /* prints a test message to serial 1
-'' serCom.printToSerial("Device ready",0); /* prints Device ready to both serial lines
+	serCom.begin(57600, 9600); /* baud rate serial 1, baud rate serial2
+	serCom.test(); /* prints a test message to serial 1
+	serCom.printToSerial("Device ready",0); /* prints Device ready to both serial lines
 
 At your loop function you can now read from both seria line buffers by just calling the following function:
 
-'' serCom.performRead();
-'' serCom.performRead2();
+	serCom.performRead();
+	serCom.performRead2();
 
 The main difference between both functions is, that performRead only reads one sign per loop while performRead2 reads all available signs within one loop. 
 
@@ -41,9 +41,9 @@ If statusSerial returns 1 for a line, you can get the result with `sercom.readSe
 
 A complete example for readout would be like the following:
 
-'' char buf1[160];
-'' buf1[0] = 0;
-'' char *bufP1 = buf1;
-'' serCom.readSerial(bufP1, 1);
+	char buf1[160];
+	buf1[0] = 0;
+	char *bufP1 = buf1;
+	serCom.readSerial(bufP1, 1);
 
 
