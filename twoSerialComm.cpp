@@ -22,9 +22,8 @@ twoSerialComm::twoSerialComm(HardwareSerial &serial1, SoftwareSerial &serial2)
  
    _finished = 0;
    _finished2 = 0;
- 
-  
-  
+   
+   
 }
 
 //<<destructor>>
@@ -320,30 +319,98 @@ int twoSerialComm::statusSerial(int line)
 
 
 /****************************************************************************/
-void twoSerialComm::printToSerial(char* msg, int line)
+void twoSerialComm::printToSerial(const char* msg, int line)
 /****************************************************************************/
 {
+	
+	
+	switch(line) {
+
+	    case 0:
+		
+	      _serial1->println(msg);
+	      _serial2->println(msg);
+	      break;
+	   
+	   case 1:
+	     _serial1->println(msg);
+	     break;
+	     
+	  case 2:
+	    _serial2->println(msg);
+	    break;
+	    
+	   default:
+	   
+	     break;
+	    
+	 }
+
+
+	
   
-  switch(line) {
-    
-    case 0:
-    
-      _serial1->println(msg);
-      _serial2->println(msg);
-      break;
-   
-   case 1:
-     _serial1->println(msg);
-     break;
-     
-  case 2:
-    _serial2->println(msg);
-    break;
-    
-   default:
-   
-     break;
-    
-  }
-  
+}
+
+
+/****************************************************************************/
+void twoSerialComm::printToSerialSlow(const char* msg, int line)
+/****************************************************************************/
+{
+	int i = 0;
+	int length = strlen(msg);
+	
+	
+	for(i=0; i < length; i++) {
+		
+		switch(line) {
+			case 0:
+				_serial1->write(msg[i]);
+				_serial2->write(msg[i]);
+			
+			break;
+			
+			case 1:
+				_serial1->write(msg[i]);
+			
+			break;
+			
+			case 2:
+				_serial2->write(msg[i]);
+			
+			break;
+			
+			default:
+			
+			break;
+		}
+		delay(1);
+	}
+	
+	//send CR
+	switch(line) {
+			case 0:
+				_serial1->write(13);
+				_serial1->write(10); //for more comfort reading the serial interface
+				_serial2->write(13);
+			
+			break;
+			
+			case 1:
+				_serial1->write(13);
+				_serial1->write(10); //for more comfort reading the serial interface
+			
+			break;
+			
+			case 2:
+				_serial2->write(13);
+			
+			break;
+			
+			default:
+			
+			break;
+		}
+	
+	
+	
 }
